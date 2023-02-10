@@ -1,19 +1,21 @@
+import calendar
 import logging
 import re
 import time
-import calendar
+from datetime import datetime
+from typing import List
 
-from tqdm import tqdm
 import pandas as pd
 from RPA.Browser.Selenium import Selenium
 from SeleniumLibrary.errors import ElementNotFound
-from datetime import datetime
+from tqdm import tqdm
 
 browser_lib = Selenium()
 
 logging.basicConfig(level=logging.INFO)
 
 money_regex = re.compile(r'\$\d{1,3}(,\d{3})*(\.\d{1,2})?|\d+\s(dollars|USD)')
+
 
 class ExtractNewsInfo:
 
@@ -24,15 +26,15 @@ class ExtractNewsInfo:
         self.section = section
         self.months = int(months)
 
-        self.titles = []
-        self.descriptions = []
-        self.dates = []
-        self.money = []
-        self.img_srcs = []
-        self.searched_phrase_in_title = []
-        self.searched_phrase_in_description = []
+        self.titles: List[str] = []
+        self.descriptions: List[str] = []
+        self.dates: List[str] = []
+        self.money: List[bool] = []
+        self.img_srcs: List[str] = []
+        self.searched_phrase_in_title: List[str] = []
+        self.searched_phrase_in_description: List[str] = []
 
-    def extract_info(self):
+    def extract_info(self) -> None:
         try:
             self._open_the_website(self.URL)
             self._search_for(self.search_phrase)
@@ -82,7 +84,6 @@ class ExtractNewsInfo:
         BASE_XPATH = '//*[@id="site-content"]/div/div[2]/div[1]/ol/li'
         len_elements = browser_lib.get_element_count(BASE_XPATH)
 
-
         current_last_month = browser_lib.get_text(
             f'{BASE_XPATH}[{len_elements}]/div/span').split('.')[0]
         end_month = self._get_month_name(datetime.now().month, self.months)
@@ -94,8 +95,7 @@ class ExtractNewsInfo:
             current_last_month = browser_lib.get_text(
                 f'{BASE_XPATH}[{len_elements}]/div/span').split('.')[0]
 
-
-    def _extract_data(self):
+    def _extract_data(self) -> None:
         logging.info("Extracting data...")
         BASE_XPATH = '//*[@id="site-content"]/div/div[2]/div[1]/ol/li'
 
