@@ -50,3 +50,5 @@ Please follow step by step, all these commands, and run from base folder
 - **phrase_in_description**: Number of times the phrase searched appears in description.
 
 - **picture_filename**: src of the image file.
+
+#### I wish I could have asked my questions about each data requested for the excel, I wanted an example of the generated excel file, but I couldn't get it, so each data is as I thought it should be, sorry if it was not exactly what was asked to extract , I did my best :)
